@@ -34,7 +34,7 @@ containers = page_soup.findAll("tr", {"style" : ""})
 
 # grabbing row contents
 
-for i in range(1, 148) :
+for i in range(1, len(containers)-1) :
     country_container = containers[i].findAll("td", {"style" : "font-weight: bold; font-size:15px; text-align:left;"})
     country = country_container[0].text
     a = [i for i in containers[i]]
