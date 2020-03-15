@@ -22,7 +22,7 @@ u_client.close()
 
 header = "Country/Other, Total Cases, New Cases, Total Deaths, New Deaths, Total Recovered, Active Cases, Serious/Critical, Total Cases/1M pop\n"
 f.write(header)
-table_
+
 
 # html parsing
 
