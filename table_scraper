@@ -9,7 +9,7 @@ url = "https://www.worldometers.info/coronavirus/"
 
 #creating csv file
 
-file_name = "coronavirus_worldometer.csv"
+file_name = "coronavirus_worldometer_dataset.csv"
 f = codecs.open(file_name, 'w', encoding='utf-8', errors='ignore')
 
 # reading page of url link
@@ -45,8 +45,10 @@ for i in range(1, len(containers)-1) :
     s = []
     for i in index :
         b = str(a[i])
-        s.append(re.findall(r">(.*?)<", b)[0].replace(",", ""))
-    
+        s.append(re.findall(r">(.*?)<", b)[0].replace(",", "").replace("+", ""))
+    for i in range(8) :
+        if s[i] == "" or s[i] == " " :
+            s[i] = "0"
     f.write(country + "," + s[0] + "," + s[1] + "," + s[2] + "," + s[3] + "," + s[4] + "," + s[5] + "," + s[6] + "," + s[7] + "\n")
 
 # grabbing total row
@@ -60,12 +62,3 @@ for i in total :
 f.write(total_row[:-1])
 
 f.close()
-
-
-
-
-
-
-
-
-
