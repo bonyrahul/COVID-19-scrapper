@@ -9,7 +9,7 @@ url = "https://www.worldometers.info/coronavirus/"
 
 #creating csv file
 
-file_name = "coronavirus_worldometer_dataset.csv"
+file_name = "coronavirus_worldometer_data.csv"
 f = codecs.open(file_name, 'w', encoding='utf-8', errors='ignore')
 
 # reading page of url link
@@ -31,20 +31,18 @@ page_soup = soup(page_html, "html.parser")
 # grabbing each row from the table in the site
 
 containers = page_soup.findAll("tr", {"style" : ""})
+containers = containers[1:-1]
 
 # grabbing row contents
 
-for i in range(1, len(containers)-1) :
+for i in range(int(len(containers)/2) - 1) :
     country_container = containers[i].findAll("td", {"style" : "font-weight: bold; font-size:15px; text-align:left;"})
     country = country_container[0].text
     a = [i for i in containers[i]]
-    index = [2*n + 1 for n in range(1, 12)]
-    index.remove(5)
-    index.remove(15)
-    index.remove(21)
+    a = a[1::2]
     s = []
-    for i in index :
-        b = str(a[i])
+    for i in a[1:] :
+        b = str(i)
         s.append(re.findall(r">(.*?)<", b)[0].replace(",", "").replace("+", ""))
     for i in range(8) :
         if s[i] == "" or s[i] == " " :
