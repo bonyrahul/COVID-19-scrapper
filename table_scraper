@@ -1,7 +1,9 @@
+
 from bs4 import BeautifulSoup as soup
 from urllib.request import urlopen as uReq
 import re
 import codecs
+import time
 
 
 
@@ -9,7 +11,7 @@ url = "https://www.worldometers.info/coronavirus/"
 
 #creating csv file
 
-file_name = "coronavirus_worldometer_data.csv"
+file_name = "coronavirus_worldometer_data_change.csv"
 f = codecs.open(file_name, 'w', encoding='utf-8', errors='ignore')
 
 # reading page of url link
@@ -23,7 +25,6 @@ u_client.close()
 header = "Country/Other, Total Cases, New Cases, Total Deaths, New Deaths, Total Recovered, Active Cases, Serious/Critical, Total Cases/1M pop\n"
 f.write(header)
 
-
 # html parsing
 
 page_soup = soup(page_html, "html.parser")
@@ -32,10 +33,17 @@ page_soup = soup(page_html, "html.parser")
 
 containers = page_soup.findAll("tr", {"style" : ""})
 containers = containers[1:-1]
+ 
+# grabbing unique country items
+
+unique_containers_country = []
+for i in containers_country : 
+    if i not in unique_containers_country :
+        unique_containers_country.append(i)
 
 # grabbing row contents
 
-for i in range(int(len(containers)/2) - 1) :
+for i in range(len(unique_containers_country) - 1) :
     country_container = containers[i].findAll("td", {"style" : "font-weight: bold; font-size:15px; text-align:left;"})
     country = country_container[0].text
     a = [i for i in containers[i]]
@@ -60,3 +68,4 @@ for i in total :
 f.write(total_row[:-1])
 
 f.close()
+
