@@ -10,7 +10,7 @@ url = "https://www.worldometers.info/coronavirus/"
 
 # creating csv file
 
-file_name = "coronavirus_worldometer.csv" # rename the file accordingly
+file_name = "coronavirus_worldometer.csv"                         # rename and specify path of the file accordingly
 f = codecs.open(file_name, 'w', encoding='utf-8', errors='ignore')
 
 # reading page of url link
