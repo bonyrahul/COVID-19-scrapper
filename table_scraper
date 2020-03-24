@@ -10,7 +10,7 @@ url = "https://www.worldometers.info/coronavirus/"
 
 # creating csv file
 
-file_name = "coronavirus_worldometer.csv"                         # rename and specify path of the file accordingly
+file_name = "coronavirus_worldometer.csv"                        # rename and specify path of the file accordingly
 f = codecs.open(file_name, 'w', encoding='utf-8', errors='ignore')
 
 # reading page of url link
@@ -21,7 +21,7 @@ u_client.close()
 
 # creating and writing header to csv file
 
-header = "Country/Other, Total Cases, New Cases, Total Deaths, New Deaths, Total Recovered, Active Cases, Serious/Critical, Total Cases/1M pop\n"
+header = "Country/Other, Total Cases, New Cases, Total Deaths, New Deaths, Total Recovered, Active Cases, Serious/Critical, Total Cases/1M pop, Total Deaths/1M pop\n"
 f.write(header)
 
 # html parsing
@@ -49,13 +49,15 @@ for i in range(len(unique_country_container) - 1) :
     a = [i for i in containers[i]]
     a = a[1::2]
     s = []
-    for i in a[1:] :
-        b = str(i)
-        s.append(re.findall(r">(.*?)<", b)[0].replace(",", "").replace("+", ""))
-    for i in range(8) :
+    for i in a :
+        if i == a[3] :
+            s.append(i.text.strip().replace(",", ""))
+        else :
+            s.append(i.text.replace(",", "").replace("+", ""))
+    for i in range(10) :
         if s[i] == "" or s[i] == " " :
             s[i] = "0"
-    f.write(country + "," + s[0] + "," + s[1] + "," + s[2] + "," + s[3] + "," + s[4] + "," + s[5] + "," + s[6] + "," + s[7] + "\n")
+    f.write(country + "," + s[1] + "," + s[2] + "," + s[3] + "," + s[4] + "," + s[5] + "," + s[6] + "," + s[7] + "," + s[8] + "," + s[9] + "\n")
 
 # grabbing total row
 
